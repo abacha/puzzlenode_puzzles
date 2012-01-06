@@ -254,8 +254,8 @@ class FileManager
 	attr_reader :moves
 
 	def board_to_code(column, row)
-		columns = { 'a' => 0, 'b' => 1, 'c' => 2, 'd' => 3, 'e' => 4, 'f' => 5, 'g' => 6, 'h' => 7 }
-		_column = columns[column]
+		columns = ('a'..'h').to_a
+		_column = columns.index(column)
 		_row = row.to_i - 1
 		return _column, _row
 	end
@@ -267,7 +267,7 @@ class FileManager
 				pos = line.split
 				column0, row0 = pos[0].scan(/./)
 				column1, row1 = pos[1].scan(/./)
-				@moves <<  [ board_to_code(column0, row0), board_to_code(column1, row1) ]
+				@moves << [ board_to_code(column0, row0), board_to_code(column1, row1) ]
 			end
 		end
 	end
@@ -313,7 +313,7 @@ class FileManager
 	end
 end
 
-f = FileManager.new()
+f = FileManager.new
 f.read_board(ARGV[0])
 f.read_moves(ARGV[1])
 f.write_result("result.txt")
